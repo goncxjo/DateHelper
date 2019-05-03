@@ -34,7 +34,7 @@ public class DateHelper {
         return datePattern.parse(textDate);
     }
 
-    private static DatePattern matchDatePattern(String textDate) {
+    private static DatePattern matchDatePattern(String textDate) throws PatternDoesntMatchException {
         DatePattern datePattern = null;
 
         if (textDate.matches(ISO8601_DATE_REGEXP)) {
@@ -43,7 +43,10 @@ public class DateHelper {
             datePattern = new LatinAmerican();
         } else if (textDate.matches(NORTH_AMERICAN_DATE_REGEXP)) {
             datePattern = new NorthAmerican();
+        } else {
+            throw new PatternDoesntMatchException();
         }
+
         return datePattern;
     }
 

@@ -57,6 +57,12 @@ public class DateHelperTest {
         assertTrue("The dates aren't equal", expectedDate.getTime().equals(outputDate));
     }
 
+    @Test(expected = PatternDoesntMatchException.class)
+    public void parseToDate_PatternException() {
+        String dateText = "01-01-20-01";
+        Date outputDate = DateHelper.parseToDate(dateText);
+    }
+
     @Test
     public void thereIsOneDayOfDifference() {
         Date dateOne = DateHelper.parseToDate("24/12/2014");
