@@ -58,8 +58,14 @@ public class DateHelperTest {
     }
 
     @Test(expected = PatternDoesntMatchException.class)
-    public void parseToDate_PatternException() {
+    public void parseToDate_InvalidDate_PatternException() {
         String dateText = "01-01-20-01";
+        Date outputDate = DateHelper.parseToDate(dateText);
+    }
+
+    @Test(expected = PatternDoesntMatchException.class)
+    public void parseToDate_NoexistentDate_PatternException() {
+        String dateText = "30-02-2019";
         Date outputDate = DateHelper.parseToDate(dateText);
     }
 

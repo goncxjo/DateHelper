@@ -14,26 +14,51 @@ public class DateHelper {
 
     private static final long DAY_IN_MILLISECONDS = 86400000L;
 
-    public static Date parseFromISO8601(String textDate) {
-        DatePattern datePattern = new ISO8601();
-        return datePattern.parse(textDate);
-    }
-
-    public static Date parseFromLatinAmericanDate(String textDate) {
-        DatePattern datePattern = new LatinAmerican();
-        return datePattern.parse(textDate);
-    }
-
-    public static Date parseFromNorthAmericanDate(String textDate) {
-        DatePattern datePattern = new NorthAmerican();
-        return datePattern.parse(textDate);
-    }
-
+    /**
+     * Parsea un texto que representa una fecha a un objeto Date con el primer patrón de fechas que coincida (flexible).
+     * @param textDate texto que representa una fecha
+     * @return objeto Date con la fecha indicada en @textDate
+     * */
     public static Date parseToDate(String textDate) {
         DatePattern datePattern = matchDatePattern(textDate);
         return datePattern.parse(textDate);
     }
 
+    /**
+     * Parsea un texto que representa una fecha a un objeto Date según el formato de fecha internacional (ISO8601).
+     * @param textDate texto que representa una fecha
+     * @return objeto Date con la fecha indicada en @textDate
+     * */
+    public static Date parseFromISO8601(String textDate) {
+        DatePattern datePattern = new ISO8601();
+        return datePattern.parse(textDate);
+    }
+
+    /**
+     * Parsea un texto que representa una fecha a un objeto Date según el formato de fecha Latinoamericano.
+     * @param textDate texto que representa una fecha
+     * @return objeto Date con la fecha indicada en @textDate
+     * */
+    public static Date parseFromLatinAmericanDate(String textDate) {
+        DatePattern datePattern = new LatinAmerican();
+        return datePattern.parse(textDate);
+    }
+
+    /**
+     * Parsea un texto que representa una fecha a un objeto Date según el formato de fecha Norteamericano.
+     * @param textDate texto que representa una fecha
+     * @return objeto Date con la fecha indicada en @textDate
+     * */
+    public static Date parseFromNorthAmericanDate(String textDate) {
+        DatePattern datePattern = new NorthAmerican();
+        return datePattern.parse(textDate);
+    }
+
+    /**
+     * Machea un texto que representa una fecha con los patrones de fecha disponibles hasta encontrar el que coincida.
+     * @param textDate texto que representa una fecha
+     * @return objeto DatePattern
+     * */
     private static DatePattern matchDatePattern(String textDate) throws PatternDoesntMatchException {
         DatePattern datePattern = null;
 
@@ -50,12 +75,23 @@ public class DateHelper {
         return datePattern;
     }
 
+    /**
+     * Calcula la diferencia entre dos fechas.
+     * @param dateOne fecha inicial
+     * @param dateTwo fecha final
+     * @return número que representa la diferencia entre fechas. Sólo valores absolutos.
+     * */
     public static int calculateDaysDifference(Date dateOne, Date dateTwo) {
         long differenceInMilliseconds = dateOne.getTime() - dateTwo.getTime();
         long daysDifference = differenceInMilliseconds / DAY_IN_MILLISECONDS;
         return Math.abs(Math.round(daysDifference));
     }
 
+    /**
+     * Determina si la primera fecha es anterior a la segunda.
+     * @param dateOne fecha inicial
+     * @param dateTwo fecha final
+     * */
     public static boolean isBefore(Date dateOne, Date dateTwo) {
         return (dateOne.getTime() - dateTwo.getTime()) < 0;
     }
